@@ -44,11 +44,10 @@ class PostController extends Controller
                 $ndata['comment'] = $i->comment;
                 $ndata['comment_by'] = $i->commentedBy->name;
                 return $ndata;
-            });
+            })->toArray();
             return $data; 
         });  
-        return response()->json(['data' => $postDetail]);
-        return view('postdetail');
+        return view('postdetail',['data' => $postDetail]);
     }
 }
 
