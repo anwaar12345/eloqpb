@@ -12,6 +12,6 @@
 */
 use App\User;
 
-Route::get('/', function () {
-    dd(User::get()->first()->id);
-});
+Route::get('/','PostController@index');
+
+Route::get('/detail/{id}','PostController@detail');
