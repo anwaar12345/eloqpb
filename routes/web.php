@@ -15,3 +15,5 @@ use App\User;
 Route::get('/','PostController@index');
 
 Route::get('/detail/{id}','PostController@detail');
+
+Route::get('/post-detail/{id}','PostController@postDetail');

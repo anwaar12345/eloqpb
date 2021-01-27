@@ -15,7 +15,7 @@
                    @if(count($posts))
                    
                    @foreach($posts as $post)
-                       <a href="{{url($post['id'])}}" style="text-decoration: none;"><p>{{ $post['content'] }}</p></a>
+                       <a href="{{url('post-detail',$post['id'])}}" style="text-decoration: none;"><p>{{ $post['content'] }}</p></a>
                    <p>Author : {{ $post['author'] }}</p>
                    @endforeach
                    @else

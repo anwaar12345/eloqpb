@@ -12,6 +12,12 @@ class Post extends Model
     }
     public function comments()
     {
-       return $this->belongsTo(Comment::class,'post_id','id');
+       return $this->hasMany(Comment::class,'post_id','id');
     }
+    public function getPostDetail($id)
+    {
+      return $this->with(['author','comments','comments.commentedBy'])
+            ->where('posts.id',$id)->get();
+    }
+   
 }
