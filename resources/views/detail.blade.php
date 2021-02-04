@@ -3,20 +3,23 @@
                 <div class="m-b-md">
                    <h1>User Detail</h1>
                 </div>
-
+                <div>
+            <form action="">
+            <input placeholder="Search Posts" type="text" name="search"><input type="submit" value="click">
+            </form>
+            </div>
                 <div class="links">
-                 @if(@count($detail))
+                 @if(@count($post))
                    <ul style="list-style-type: none"> 
-                   <li style="text-decoration: none;">Name: {{ $detail->name }}</a></li>
-                   <li style="text-decoration: none;">Email: {{ $detail->email }}</a></li>                    
+                   <li style="text-decoration: none;">Name: {{ $post['name'] }}</a></li>
+                   <li style="text-decoration: none;">Email: {{ $post['email'] }}</a></li>                    
                 </ul>
                 <div class="m-b-md">
                    <h1>Posts</h1>
-                   @if(count($posts))
-                   
-                   @foreach($posts as $post)
+                   @if(count($post['content']))
+                   @foreach($post['content'] as $post)
                        <a href="{{url('post-detail',$post['id'])}}" style="text-decoration: none;"><p>{{ $post['content'] }}</p></a>
-                   <p>Author : {{ $post['author'] }}</p>
+                   <p>Author :</p>
                    @endforeach
                    @else
                    <p>No Posts for You !!!</p>

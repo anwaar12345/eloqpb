@@ -20,15 +20,13 @@ class PostController extends Controller
         return view('welcome',['users' => $users]);
     }
 
-    public function detail($id)
+    public function detail(Request $request,$id)
     {  
-        $detail = $this->user->getUser($id);
 
-        $posts = $this->user->getUserPosts($id); 
+        $posts = $this->user->getUserPosts($request,$id); 
 
         return view('detail',[
-            'detail' => $detail,
-            'posts' => $posts
+            'post' => $posts
             ]);
     }
     public function postDetail($id)

@@ -28,6 +28,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $with = ['posts'];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -45,23 +47,33 @@ class User extends Authenticatable
     {
        return $this->findOrFail($id);
     }
-    public function getUserPosts($id)
+    public function getUserPosts($request,$id)
     {
-       return $this->find($id)->posts
-       ->map(function($q)
-       {
-           $data = [];
-           $data['id'] = $q->id;
-           $data['content'] = $q->content;
-           $data['author'] = $q->author->name;
-           $data['email'] = $q->author->email;
-           return $data;
-
+       
+       $posts = $this->where('id',$id);
+       if(isset($request->search)){
+        $posts = $posts->with(['posts' => function($q) use($request) {
+            $q->where('content','LIKE','%'.$request->search.'%');
+        }]);    
+        }else{
+            $posts = $posts->with('posts');
+        }
+       $posts = $posts->first();
+       $post = [];
+       $post['name'] = $posts->name;
+       $post['email'] = $posts->email;
+       $post['content'] = $posts->posts->map(function($q){
+           $innerData = [];
+           $innerData['id'] = $q->id;
+           $innerData['content'] = $q->content;
+           return $innerData;
        });
+    
+       return $post;
     }
 
     public function posts()
     {
-        return $this->hasMany(Post::class,'user_id','id')->with('author');
+        return $this->hasMany(Post::class,'user_id','id');
     }
 }
