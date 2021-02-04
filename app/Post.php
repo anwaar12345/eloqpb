@@ -16,8 +16,10 @@ class Post extends Model
     }
     public function getPostDetail($id)
     {
-      return $this->with(['author','comments','comments.commentedBy'])
-            ->where('posts.id',$id)->get();
+      return Post::select('id','user_id','content')->has('author')
+      ->has('comments.commentedBy')
+      ->with(['author:id,name','comments.commentedBy'])
+            ->where('posts.id',$id)->first();
     }
    
 }

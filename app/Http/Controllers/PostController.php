@@ -34,19 +34,6 @@ class PostController extends Controller
     public function postDetail($id)
     {
         $postDetail = $this->post->getPostDetail($id);
-        $postDetail = $postDetail->map(function($q){
-            $data = [];
-            $data['id'] = $q->id;
-            $data['content'] = $q->content;
-            $data['author'] = $q->author->name;
-            $data['comments'] = $q->comments->map(function($i){
-                $ndata = [];
-                $ndata['comment'] = $i->comment;
-                $ndata['comment_by'] = $i->commentedBy->name;
-                return $ndata;
-            })->toArray();
-            return $data; 
-        });  
         return view('postdetail',['data' => $postDetail]);
     }
 }
